@@ -1,0 +1,1972 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#120d0d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title> دعوت نامه عروسی </title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+body{
+  font-family:
+    Tahoma,
+    "Noto Sans Arabic",
+    Arial,
+    sans-serif;
+
+  background:#120d0d;
+  color:#3b2a1d;
+
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+
+  touch-action:none;
+}
+
+button,
+a{
+  font:inherit;
+}
+
+#app{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+/* =========================
+   تنظیم عمومی صفحات
+   ========================= */
+
+.page{
+  position:absolute;
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  overflow:hidden;
+
+  opacity:0;
+  visibility:hidden;
+
+  transform:translateY(100%);
+
+  transition:
+    transform .75s cubic-bezier(.22,.8,.25,1),
+    opacity .55s ease,
+    visibility 0s linear .75s;
+}
+
+.page.active{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+
+  transition:
+    transform .75s cubic-bezier(.22,.8,.25,1),
+    opacity .55s ease;
+}
+
+.page.prev{
+  transform:translateY(-100%);
+  opacity:0;
+  visibility:hidden;
+}
+
+/* =========================
+   دکمه موسیقی
+   ========================= */
+
+.music-btn{
+  position:fixed;
+  z-index:50;
+
+  top:max(14px, env(safe-area-inset-top));
+  left:max(14px, env(safe-area-inset-left));
+
+  width:42px;
+  height:42px;
+
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:50%;
+
+  background:rgba(20,15,10,.45);
+  color:#fff;
+
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+
+  cursor:pointer;
+}
+
+/* =========================
+   سازگاری آیفون و اندروید
+   ========================= */
+
+@supports (height:100dvh){
+  .page{
+    height:100dvh;
+  }
+
+  #app{
+    height:100dvh;
+  }
+}
+
+/* موبایل‌های خیلی کوچک */
+@media(max-width:380px){
+
+  .music-btn{
+    width:40px;
+    height:40px;
+  }
+
+}
+
+/* صفحه‌های بزرگ‌تر */
+@media(min-width:700px){
+
+  .music-btn{
+    width:44px;
+    height:44px;
+  }
+
+}
+   </style>
+</head>
+  <body>
+
+   <style>
+/* =========================
+   صفحه اول — شروع دعوت‌نامه
+   ========================= */
+
+#page1{
+  background:#100b0b;
+  align-items:stretch;
+  justify-content:stretch;
+  padding:0;
+}
+
+/* تصویر اصلی پس‌زمینه */
+.bg-image{
+  position:absolute;
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+  object-position:center center;
+
+  z-index:0;
+
+  user-select:none;
+  -webkit-user-drag:none;
+}
+
+/* محل قرار گرفتن قلب‌ها */
+.heart-stage{
+  position:absolute;
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  overflow:hidden;
+
+  z-index:1;
+}
+
+/* هر دو قلب */
+.heart-layer{
+  position:absolute;
+
+  left:50%;
+  top:50%;
+
+  width:min(43vw,230px);
+  height:auto;
+
+  opacity:0;
+
+  will-change:
+    transform,
+    opacity;
+
+  user-select:none;
+  -webkit-user-drag:none;
+
+  pointer-events:none;
+}
+
+/* قلب قرمز — از سمت چپ */
+.red-heart{
+  animation:
+    redMove
+    10s
+    cubic-bezier(.2,.7,.2,1)
+    forwards;
+
+  filter:
+    drop-shadow(0 0 8px rgba(255,45,45,.45))
+    drop-shadow(0 0 18px rgba(255,30,30,.22));
+}
+
+/* قلب طلایی — از سمت راست */
+.gold-heart{
+  animation:
+    goldMove
+    10s
+    cubic-bezier(.2,.7,.2,1)
+    forwards;
+
+  filter:
+    drop-shadow(0 0 8px rgba(255,205,90,.45))
+    drop-shadow(0 0 18px rgba(255,190,50,.22));
+}
+
+/* حرکت قلب قرمز */
+@keyframes redMove{
+
+  0%{
+    opacity:0;
+
+    transform:
+      translate(
+        calc(-50% - 60vw),
+        -50%
+      )
+      scale(.72);
+  }
+
+  8%{
+    opacity:1;
+  }
+
+  100%{
+    opacity:1;
+
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+  }
+}
+
+/* حرکت قلب طلایی */
+@keyframes goldMove{
+
+  0%{
+    opacity:0;
+
+    transform:
+      translate(
+        calc(-50% + 60vw),
+        -50%
+      )
+      scale(.72);
+  }
+
+  8%{
+    opacity:1;
+  }
+
+  100%{
+    opacity:1;
+
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+  }
+}
+
+/* نور خیلی ظریف بعد از رسیدن قلب‌ها */
+.joined-glow{
+  position:absolute;
+
+  left:50%;
+  top:50%;
+
+  width:30vmin;
+  height:30vmin;
+
+  transform:translate(-50%,-50%);
+
+  border-radius:50%;
+
+  z-index:2;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,210,120,.18),
+      transparent 65%
+    );
+
+  animation:
+    joinedGlow
+    1.8s
+    ease
+    10s
+    forwards;
+}
+
+@keyframes joinedGlow{
+
+  to{
+    opacity:1;
+  }
+
+}
+
+/* نوشته پایین صفحه اول */
+
+.page1-title{
+  position:absolute;
+
+  z-index:3;
+
+  bottom:9vh;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  color:#f7ead5;
+
+  text-align:center;
+
+  font-size:
+    clamp(
+      15px,
+      4.5vw,
+      24px
+    );
+
+  letter-spacing:.08em;
+
+  white-space:nowrap;
+
+  text-shadow:
+    0 2px 12px rgba(0,0,0,.9);
+}
+
+.page1-subtitle{
+  position:absolute;
+
+  z-index:5;
+
+  bottom:6vh;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  color:#d8c8ad;
+
+  text-align:center;
+
+  font-family:
+    "Noto Naskh Arabic",
+    "Noto Serif Arabic",
+    serif;
+
+  font-size:clamp(16px,4.5vw,22px);
+
+  font-weight:400;
+
+  white-space:nowrap;
+
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.35);
+}
+
+
+  
+/* =========================
+   علامت «بالا بکشید»
+   ========================= */
+
+.swipe-hint{
+  position:absolute;
+
+  z-index:4;
+
+  bottom:
+    max(
+      3.2vh,
+      24px
+    );
+
+  left:50%;
+
+  transform:translateX(-50%);
+
+  color:#fff;
+
+  text-align:center;
+
+  font-size:14px;
+
+  opacity:.22;
+
+  transition:
+    opacity .6s ease;
+
+  text-shadow:
+    0 2px 8px #000;
+
+  white-space:nowrap;
+}
+
+/* بعد از پایان ۱۰ ثانیه قلب‌ها،
+   علامت واضح‌تر می‌شود */
+.swipe-hint.ready{
+  opacity:.95;
+}
+
+/* فلش بالا */
+.swipe-arrow{
+  display:block;
+
+  font-size:24px;
+
+  line-height:1;
+
+  animation:
+    upHint
+    1.3s
+    infinite;
+}
+
+@keyframes upHint{
+
+  50%{
+    transform:translateY(-7px);
+  }
+
+}
+
+/* =========================
+   موبایل‌های خیلی کوچک
+   ========================= */
+
+@media(max-width:380px){
+
+  .heart-layer{
+    width:39vw;
+  }
+
+  .page1-title{
+    bottom:10vh;
+  }
+
+}
+
+/* =========================
+   موبایل و تبلت بزرگ‌تر
+   ========================= */
+
+@media(min-width:700px){
+
+  .heart-layer{
+    width:230px;
+  }
+
+}
+</style>
+
+<!-- =========================
+     صفحه اول
+     ========================= -->
+
+<section
+  class="page active"
+  id="page1"
+>
+
+  <!-- پس‌زمینه واقعی تو -->
+  <img
+    class="bg-image"
+    src="page3-bg.webp"
+    alt=""
+  >
+
+  <!-- محل حرکت قلب‌ها -->
+  <div class="heart-stage">
+
+    <!-- قلب قرمز واقعی تو -->
+    <img
+      class="heart-layer red-heart"
+      src="red-heart.webp"
+      alt=""
+    >
+
+    <!-- قلب طلایی واقعی تو -->
+    <img
+      class="heart-layer gold-heart"
+      src="gold-heart.webp"
+      alt=""
+    >
+
+    <!-- نور ظریف هنگام رسیدن قلب‌ها -->
+    <div class="joined-glow"></div>
+
+  </div>
+
+  <!-- نوشته پایین -->
+  <div class="page1-title">
+    دعوت‌نامه 
+  </div> 
+  <div class="page1-subtitle">
+    جشن عروسی 
+  </div>
+  
+
+  <!-- راهنمای کشیدن صفحه -->
+  <div
+    class="swipe-hint"
+    id="swipeHint"
+  >
+    <span class="swipe-arrow">↑</span>
+    بالا بکشید
+  </div>
+
+</section>
+
+   <style>
+/* =========================
+   صفحه دوم — متن دعوت‌نامه
+   ========================= */
+
+#page2{
+  background:
+    linear-gradient(rgba(6,5,5,.55), rgba(6,5,5,.55)),
+    url("sunlightweddingpose.webp") center center / cover no-repeat;
+
+  padding:
+    max(18px, env(safe-area-inset-top))
+    max(18px, env(safe-area-inset-right))
+    max(18px, env(safe-area-inset-bottom))
+    max(18px, env(safe-area-inset-left));
+}
+
+
+     
+/* کارت دعوت */
+.invitation-card{
+  width:min(94vw,760px);
+  max-height:calc(100dvh - 30px);
+  overflow-y:auto;
+  overflow-x:hidden;
+
+  padding:clamp(25px,6vw,48px) clamp(20px,6vw,58px);
+
+  border:1px solid rgba(226,190,133,.30);
+  border-radius:24px;
+
+  background:
+   rgba(7,6,6,.18);
+  box-shadow:
+    0 22px 70px rgba(0,0,0,.50),
+    inset 0 0 55px rgba(218,167,94,.035);
+
+  text-align:center;
+  backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);
+}
+
+
+     
+/* نوار اسکرول خیلی ظریف */
+.invitation-card::-webkit-scrollbar{
+  width:3px;
+}
+
+.invitation-card::-webkit-scrollbar-thumb{
+  background:
+    rgba(139,100,31,.35);
+
+  border-radius:10px;
+}
+
+/* عنوان */
+.kicker{
+  font-size:
+    clamp(
+      16px,
+      4.2vw,
+      22px
+    );
+
+  line-height:1.9;
+
+  margin:
+    0 0 18px;
+
+  color:#e7c38c;
+
+  font-weight:600;
+}
+
+/* شعر */
+.verse{
+  font-size:
+    clamp(
+      14px,
+      3.8vw,
+      19px
+    );
+
+  line-height:2.15;
+
+  margin:
+    0 auto 18px;
+
+  color:#4b3929;
+}
+
+/* متن‌های دعوت */
+.invitation-card p{
+  font-size:
+    clamp(
+      14px,
+      3.7vw,
+      18px
+    );
+
+  line-height:2.15;
+
+  margin:
+    11px 0;
+
+  color:#f7ead7;
+}
+
+/* قسمت نام مهمان */
+.guest-line{
+  margin-top:20px !important;
+}
+
+/* نام مهمان */
+.guest-name{
+  margin:18px 0 10px;
+  font-family:"Noto Naskh Arabic","Noto Serif Arabic",serif;
+  font-size:clamp(25px,6.5vw,34px);
+  font-weight:600;
+  color:#eadfcf;
+  line-height:1.9;
+  letter-spacing:.2px;
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.28);
+}
+
+/* =========================
+   تنظیم موبایل
+   ========================= */
+
+@media(max-width:430px){
+
+  #page2{
+    padding:
+      max(12px, env(safe-area-inset-top))
+      12px
+      max(12px, env(safe-area-inset-bottom))
+      12px;
+  }
+
+  .invitation-card{
+    width:96vw;
+
+    max-height:
+      calc(
+        100dvh
+        - 24px
+      );
+
+    padding:
+      22px 17px;
+
+    border-radius:20px;
+  }
+
+  .kicker{
+    margin-bottom:14px;
+  }
+
+  .verse{
+    line-height:2;
+  }
+
+  .invitation-card p{
+    line-height:2;
+    margin:9px 0;
+  }
+
+}
+
+/* موبایل‌های خیلی کوچک */
+@media(max-width:360px){
+
+  .invitation-card{
+    padding:
+      19px 14px;
+  }
+
+  .kicker{
+    font-size:15px;
+  }
+
+  .verse,
+  .invitation-card p{
+    font-size:13px;
+  }
+
+}
+</style>
+
+
+<!-- =========================
+     صفحه دوم — دعوت‌نامه
+     ========================= -->
+
+<section
+  class="page" id="page2">
+
+  <div class="invitation-card">
+
+    <!-- عنوان -->
+    <p class="kicker">
+      بنام آنکه پیوند دهنده قلب‌هاست
+    </p>
+
+
+    <!-- چهار بیت -->
+    <p class="verse">
+
+کنار هم، به عهدِ عشق، تا آخرِ این راه<br>
+که جز مهرِ تو در دل، نمانَد هیچ پناه<br> 
+
+چه زیبا می‌شود دنیا،اگر با هم, هم قدم باشیم<br>
+من و تو، تا همیشه، عاشقِ هم، هم‌قسم باشیم<br>
+
+</p>
+
+
+    <!-- خانواده‌ها -->
+    <p>
+فامیل های الحاج  خاکیرا  " صافی "
+      و  سید الیاس  " سادات "
+                    
+                         
+    </p>
+
+
+    <!-- دعوت -->
+    <p>
+      جشن عروسی عزیزان خویش
+    </p>
+
+
+    <!-- نام عروس و داماد -->
+    <p>
+      آقای عبدالله «نوری»
+      و دوشیزه «سادات»
+    </p>
+
+
+    <!-- متن اصلی -->
+    <p>
+      را با خلوص نیت و صمیمیت
+      در یک شام دل‌انگیز
+      در جمع شما دوستان
+      برگزار می‌نمایند
+    </p>
+
+
+    <!-- مهمان -->
+    <p class="guest-line">
+
+      از جناب محترم/محترمه
+
+      <br>
+
+      <span
+        class="guest-name"
+        id="guestName"
+      >
+        مهمان گرامی
+      </span>
+
+    </p>
+
+
+    <!-- درخواست حضور -->
+    <p>
+      خواهشمندیم با حضورتان
+      محفل ما را رنگین‌تر سازید
+    </p>
+
+  </div>
+
+</section>
+
+   <style>
+/* =========================
+   صفحه سوم — تاریخ و محل
+   ========================= */
+#page3{
+  background:
+    linear-gradient(rgba(6,5,5,.55), rgba(6,5,5,.55)),
+    url("weddings.webp") center center / cover no-repeat;
+
+  padding:
+    max(18px, env(safe-area-inset-top))
+    max(18px, env(safe-area-inset-right))
+    max(18px, env(safe-area-inset-bottom))
+    max(18px, env(safe-area-inset-left));
+}
+
+/* کارت اطلاعات */
+.info-wrap{
+  width:min(92vw,650px);
+  max-height:calc(100dvh - 30px);
+  overflow:auto;
+
+  padding:clamp(24px,7vw,45px);
+  transform:translateY(5vh);
+
+  text-align:center;
+
+  border-radius:26px;
+  border:1px solid rgba(226,190,133,.28);
+
+  background:
+   
+    rgba(7,6,6,.18);
+
+  box-shadow:0 24px 70px rgba(0,0,0,.48);
+
+  backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);
+
+  -webkit-overflow-scrolling:touch;
+}
+
+/* عنوان */
+.info-title{
+  font-size:
+    clamp(
+      20px,
+      5.5vw,
+      30px
+    );
+
+  color:#e7c38c;
+
+  margin:
+    0 0 22px;
+
+  line-height:1.7;
+}
+
+/* متن اطلاعات */
+.info-text{
+  font-size:
+    clamp(
+      15px,
+      4vw,
+      19px
+    );
+
+  line-height:2.2;
+
+  margin:
+    10px 0;
+
+  color:#f7ead7;
+}
+
+/* دکمه‌ها */
+.info-buttons{
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:12px;
+
+  justify-content:center;
+
+  margin-top:24px;
+}
+
+/* دکمه اصلی */
+.info-btn{
+  min-width:150px;
+
+  padding:
+    13px 18px;
+
+  border-radius:999px;
+
+  text-decoration:none;
+
+  color:#fff;
+
+  background:#9a722f;
+
+  box-shadow:
+    0 7px 18px
+    rgba(101,70,25,.22);
+
+  transition:
+    transform .2s ease,
+    opacity .2s ease;
+
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* لمس دکمه */
+.info-btn:active{
+  transform:scale(.96);
+  opacity:.85;
+}
+
+/* دکمه‌های تماس */
+.info-btn.secondary{
+  background:#6d5130;
+}
+
+/* =========================
+   موبایل
+   ========================= */
+
+@media(max-width:430px){
+
+  #page3{
+    padding:
+      max(12px, env(safe-area-inset-top))
+      12px
+      max(12px, env(safe-area-inset-bottom))
+      12px;
+  }
+
+  .info-wrap{
+    width:96vw;
+
+    max-height:
+      calc(
+        100dvh - 24px
+      );
+
+    padding:
+      24px 17px;
+
+    border-radius:22px;
+  }
+
+  .info-buttons{
+    gap:10px;
+  }
+
+  .info-btn{
+    width:100%;
+    min-width:0;
+
+    padding:
+      13px 15px;
+  }
+
+}
+
+/* موبایل‌های خیلی کوچک */
+@media(max-width:360px){
+
+  .info-wrap{
+    padding:
+      20px 14px;
+  }
+
+  .info-title{
+    font-size:20px;
+  }
+
+  .info-text{
+    font-size:14px;
+  }
+
+}
+</style>
+
+
+<!-- =========================
+     صفحه سوم
+     ========================= -->
+
+<section
+  class="page"
+  id="page3"
+>
+
+  <div class="info-wrap">
+
+    <!-- عنوان -->
+    <h2 class="info-title">
+      زمان و محل برگزاری
+    </h2>
+
+
+    <!-- تاریخ و ساعت -->
+    <p class="info-text">
+      روز (__) مورخ(--) عقرب سال ۱۴۰۵
+      ساعت (۵) عصر
+    </p>
+
+
+    <!-- محل پذیرایی -->
+    <p class="info-text">
+      محل پذیرایی: ___________
+    </p>
+
+
+    <!-- دکمه‌ها -->
+    <div class="info-buttons">
+
+      <!-- موقعیت -->
+      <a
+        class="info-btn"
+        id="locationBtn"
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ⌖ موقعیت مراسم
+      </a>
+
+
+      <!-- تماس اول -->
+      <a
+        class="info-btn secondary"
+        id="phone1Btn"
+        href="#"
+      >
+        ☎ تماس اول
+      </a>
+
+
+      <!-- تماس دوم -->
+      <a
+        class="info-btn secondary"
+        id="phone2Btn"
+        href="#"
+      >
+        ☎ تماس دوم
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+   <style>
+/* =========================
+   صفحه چهارم — تا دیدار
+   ========================= */
+
+#page4{
+  background:
+        url("final-background.webp") center center / cover no-repeat;
+
+  padding:
+    max(0px, env(safe-area-inset-top))
+    max(0px, env(safe-area-inset-right))
+    max(0px, env(safe-area-inset-bottom))
+    max(0px, env(safe-area-inset-left));
+}
+
+/* عکس نهایی */
+.final-bg{
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+  object-position:center center;
+
+  z-index:0;
+
+  user-select:none;
+  -webkit-user-drag:none;
+}
+
+/* لایه خیلی ظریف روی عکس */
+.final-overlay{
+  position:absolute;
+
+  inset:0;
+
+  z-index:1;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(30,20,10,.08),
+      rgba(30,20,10,.28)
+    );
+}
+
+/* کادر شیشه‌ای نوشته */
+     .final-content{
+  position:relative;
+  z-index:2;
+  width:min(88vw,560px);
+  padding:
+    clamp(28px,8vw,48px)
+    clamp(20px,7vw,45px);
+  text-align:center;
+       transform:translateX(26%);
+}
+.final-content .farewell{
+  margin:0;
+  font-family:
+    "Segoe Print",
+    "Bradley Hand",
+    "Noto Naskh Arabic",
+    serif;
+  font-size:clamp(28px,8vw,40px);
+  font-weight:500;
+  line-height:1.8;
+  color:#c9a66b;
+  text-align:center;
+  text-shadow:
+    0 0 5px rgba(201,166,107,.35),
+    0 2px 14px rgba(80,55,25,.28);
+}
+
+.farewell-line{
+  margin-top:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  direction:ltr;
+  color:#c9a66b;
+  font-size:18px;
+  line-height:1;
+  text-shadow:
+    0 0 5px rgba(201,166,107,.35),
+    0 2px 10px rgba(80,55,25,.25);
+   transform:translateX(-25);
+}
+
+
+
+.farewell-heart{
+  margin:0 7px;
+  font-size:18px;
+  transform:translateY(-1px);
+  color : #c9a66b;
+  text-shadow:
+    0 0 6px rgba(201,166,107,.45);
+}
+
+
+
+
+
+
+
+
+     
+/* عنوان آخر */
+.final-content h1{
+  margin:
+    0 0 18px;
+
+  font-size:
+    clamp(
+      23px,
+      6.5vw,
+      38px
+    );
+
+  line-height:1.7;
+
+  color:#6d4b21;
+
+  text-shadow:
+    0 1px 8px
+    rgba(255,255,255,.8);
+}
+
+/* تا دیدار */
+.final-content p{
+  margin:0;
+
+  font-size:
+    clamp(
+      25px,
+     7vw,
+      36px
+    );
+
+  line-height:2;
+
+  color:#fff8e8;
+  text-align:right;
+  padding-right:18%;
+}
+
+
+/* =========================
+   موبایل صفحه آخر
+   ========================= */
+
+@media(max-width:430px){
+
+  .final-content{
+    width:88vw;
+
+    padding:
+      28px 20px;
+
+    border-radius:24px;
+  }
+
+  .final-content h1{
+    font-size:24px;
+  }
+
+  .final-content p{
+    font-size:18px;
+  }
+
+}
+
+
+/* =========================
+   صفحه‌های خیلی کوچک
+   ========================= */
+
+@media(max-width:360px){
+
+  .final-content{
+    width:91vw;
+
+    padding:
+      24px 16px;
+  }
+
+  .final-content h1{
+    font-size:21px;
+  }
+
+  .final-content p{
+    font-size:17px;
+  }
+
+}
+</style>
+
+
+<!-- =========================
+     صفحه چهارم
+     ========================= -->
+
+<section
+  class="page"
+  id="page4"
+>
+
+  <!-- عکس نهایی که خودت اضافه کردی -->
+  <img
+    class="final-bg"
+    src="final-background.webp"
+    alt=""
+  >
+
+  <!-- لایه ظریف -->
+  <div class="final-overlay"></div>
+
+
+  <!-- متن نهایی -->
+  <div class="final-content">
+ <p class="farewell">
+    تا دیدار...
+  </p>
+
+  <div class="farewell-line">
+    <span>────</span>
+    <span class="farewell-heart">♥</span>
+    <span>────</span>
+ </div>
+  </div>
+  
+
+</section>
+
+
+<!-- =========================
+     دکمه موسیقی
+     ========================= -->
+
+<button
+  class="music-btn"
+  id="musicBtn"
+  type="button"
+  aria-label="موسیقی"
+>
+  ♫
+</button>
+
+
+<!-- فایل موسیقی -->
+<audio
+  id="music"
+  preload="auto"
+  loop
+></audio>
+
+
+<script>
+
+/* ==================================================
+   تنظیمات اصلی عروسی
+   ================================================== */
+
+const WEDDING_CONFIG = {
+
+  /* لینک Google Maps را بعداً اینجا می‌گذاری */
+  LOCATION_URL:
+    "PASTE_GOOGLE_MAPS_LINK_HERE",
+
+
+  /* شماره اول */
+  PHONE_1:
+    "+93783348594",
+
+
+  /* شماره دوم */
+  PHONE_2:
+    "+93729070021",
+
+
+  /* نام فایل موسیقی */
+  MUSIC_URL:
+    "wedding-music.mp3",
+
+
+  /* نام مهمان‌ها */
+  GUESTS: {
+
+  guest1: "جمشید « نوری » و فامیل گرامی شان",
+  guest2: "باسط «شریفی»",
+  guest3: "نام مهمان 3",
+  guest4: "نام مهمان 4",
+  guest5: "نام مهمان 5",
+  guest6: "نام مهمان 6",
+  guest7: "نام مهمان 7",
+  guest8: "نام مهمان 8",
+  guest9: "نام مهمان 9",
+  guest10: "نام مهمان 10",
+  guest11: "نام مهمان 11",
+  guest12: "نام مهمان 12",
+  guest13: "نام مهمان 13",
+  guest14: "نام مهمان 14",
+  guest15: "نام مهمان 15"
+  }
+};
+
+
+/* ==================================================
+   مدیریت صفحات
+   ================================================== */
+
+const pages =
+  [...document.querySelectorAll(".page")];
+
+
+let currentPage = 0;
+
+
+/* ==================================================
+   آماده شدن صفحه اول
+   ================================================== */
+
+let page1Ready = false;
+
+
+/*
+  قلب‌ها ۱۰ ثانیه حرکت می‌کنند
+  سپس ۵ ثانیه مکث می‌کنیم
+  مجموعاً بعد از ۱۵ ثانیه
+  علامت بالا کشیدن آماده می‌شود.
+*/
+
+const swipeHint =
+  document.getElementById("swipeHint");
+
+
+setTimeout(() => {
+
+  page1Ready = true;
+
+  if(swipeHint){
+    swipeHint.classList.add("ready");
+  }
+
+},10000);
+
+
+/* ==================================================
+   رفتن به صفحه
+   ================================================== */
+
+function setPage(number){
+
+  if(
+    number < 0 ||
+    number >= pages.length ||
+    number === currentPage
+  ){
+    return;
+  }
+
+
+  pages.forEach((page,index)=>{
+
+    page.classList.toggle(
+      "active",
+      index === number
+    );
+
+    page.classList.toggle(
+      "prev",
+      index < number
+    );
+
+  });
+
+
+  currentPage = number;
+
+}
+
+
+/* ==================================================
+   صفحه بعد
+   ================================================== */
+
+function nextPage(){
+
+  /*
+    صفحه اول تا پایان
+    انیمیشن قلب‌ها قفل است.
+  */
+
+  if(
+    currentPage === 0 &&
+    !page1Ready
+  ){
+    return;
+  }
+
+
+  setPage(
+    currentPage + 1
+  );
+
+}
+
+
+/* ==================================================
+   صفحه قبلی
+   ================================================== */
+
+function prevPage(){
+
+  setPage(
+    currentPage - 1
+  );
+
+}
+
+
+/* ==================================================
+   سیستم Swipe
+   مخصوص موبایل
+   ================================================== */
+
+let startY = 0;
+let startX = 0;
+let moving = false;
+
+
+function pointerStart(event){
+
+  const point =
+    event.touches
+      ? event.touches[0]
+      : event;
+
+  startY = point.clientY;
+  startX = point.clientX;
+
+  moving = true;
+
+}
+
+
+function pointerEnd(event){
+
+  if(!moving){
+    return;
+  }
+
+
+  const point =
+    event.changedTouches
+      ? event.changedTouches[0]
+      : event;
+
+
+  const dy =
+    point.clientY - startY;
+
+  const dx =
+    point.clientX - startX;
+
+
+  moving = false;
+
+
+  /*
+    اگر حرکت خیلی کم بود
+    کاری نکن.
+  */
+
+  if(
+    Math.abs(dy) < 45
+  ){
+    return;
+  }
+
+
+  /*
+    اگر حرکت افقی بود
+    کاری نکن.
+  */
+
+  if(
+    Math.abs(dy) <
+    Math.abs(dx) * 1.15
+  ){
+    return;
+  }
+
+
+  /* کشیدن به بالا */
+  if(dy < 0){
+
+    nextPage();
+
+  }
+
+  /* کشیدن به پایین */
+  else{
+
+    prevPage();
+
+  }
+
+}
+
+
+/* لمس */
+window.addEventListener(
+  "touchstart",
+  pointerStart,
+  {passive:true}
+);
+
+window.addEventListener(
+  "touchend",
+  pointerEnd,
+  {passive:true}
+);
+
+
+/* ماوس / ترک‌پد */
+window.addEventListener(
+  "pointerdown",
+  pointerStart,
+  {passive:true}
+);
+
+window.addEventListener(
+  "pointerup",
+  pointerEnd,
+  {passive:true}
+);
+
+
+/* کلیدهای کیبورد برای تست */
+window.addEventListener(
+  "keydown",
+  event => {
+
+    if(
+      event.key === "ArrowUp"
+    ){
+      nextPage();
+    }
+
+
+    if(
+      event.key === "ArrowDown"
+    ){
+      prevPage();
+    }
+
+  }
+);
+
+
+/* ==================================================
+   نام مهمان از لینک
+   ================================================== */
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+
+const rawGuest =
+  params.get("guest");
+
+
+let guestName =
+  "مهمان گرامی";
+
+
+if(rawGuest){
+
+  /*
+    اگر نام فارسی یا انگلیسی
+    مستقیماً در لینک باشد
+  */
+
+  const decoded =
+    decodeURIComponent(
+      rawGuest.replace(
+        /\+/g,
+        " "
+      )
+    ).trim();
+
+
+  /*
+    اگر کد مهمان داخل جدول باشد
+    نام جدول را نشان بده.
+    اگر کد وجود نداشت،
+    خود مقدار لینک را نشان بده.
+  */
+
+  guestName =
+    WEDDING_CONFIG.GUESTS[decoded]
+    ||
+    decoded
+    ||
+    guestName;
+
+}
+
+
+const guestNameElement =
+  document.getElementById(
+    "guestName"
+  );
+
+
+if(guestNameElement){
+
+  guestNameElement.textContent =
+    guestName;
+
+}
+
+
+/* ==================================================
+   لینک موقعیت
+   ================================================== */
+
+const locationBtn =
+  document.getElementById(
+    "locationBtn"
+  );
+
+
+if(
+  WEDDING_CONFIG.LOCATION_URL &&
+  !WEDDING_CONFIG.LOCATION_URL.startsWith(
+    "PASTE_"
+  )
+){
+
+  locationBtn.href =
+    WEDDING_CONFIG.LOCATION_URL;
+
+}
+else{
+
+  locationBtn.addEventListener(
+    "click",
+    event => {
+      event.preventDefault();
+    }
+  );
+
+}
+
+
+/* ==================================================
+   شماره تلفن‌ها
+   ================================================== */
+
+function setPhone(
+  id,
+  number,
+  label
+){
+
+  const button =
+    document.getElementById(id);
+
+
+  if(
+    number &&
+    !number.startsWith("PASTE_")
+  ){
+
+    /*
+      tel: باعث می‌شود
+      در آیفون و اندروید
+      صفحه تماس باز شود.
+    */
+
+    button.href =
+      "tel:" +
+      number.replace(
+        /[^\d+]/g,
+        ""
+      );
+
+
+    button.textContent =
+      "☎ " + label;
+
+  }
+
+  else{
+
+    button.href = "#";
+
+    button.textContent =
+      "☎ " + label;
+
+
+    button.addEventListener(
+      "click",
+      event => {
+        event.preventDefault();
+      }
+    );
+
+  }
+
+}
+
+
+setPhone(
+  "phone1Btn",
+  WEDDING_CONFIG.PHONE_1,
+  "تماس اول"
+);
+
+
+setPhone(
+  "phone2Btn",
+  WEDDING_CONFIG.PHONE_2,
+  "تماس دوم"
+);
+
+
+/* ==================================================
+   موسیقی
+   ================================================== */
+
+const audio =
+  document.getElementById("music");
+
+
+const musicBtn =
+  document.getElementById("musicBtn");
+
+
+audio.src =
+  WEDDING_CONFIG.MUSIC_URL;
+
+
+let musicOn = false;
+
+
+/*
+  شروع موسیقی بعد از اولین
+  لمس کاربر.
+*/
+
+async function startMusic(){
+
+  if(
+    !audio.src ||
+    WEDDING_CONFIG.MUSIC_URL.startsWith(
+      "PASTE_"
+    )
+  ){
+    return;
+  }
+
+
+  try{
+
+    await audio.play();
+
+    musicOn = true;
+
+    musicBtn.textContent =
+      "♫";
+
+  }
+  catch(error){
+
+    /*
+      بعضی مرورگرها
+      تا تعامل کاربر
+      اجازه پخش نمی‌دهند.
+    */
+
+  }
+
+}
+
+
+/* توقف موسیقی */
+function stopMusic(){
+
+  audio.pause();
+
+  musicOn = false;
+
+  musicBtn.textContent =
+    "×";
+
+}
+
+
+/*
+  اولین لمس کاربر
+  موسیقی را شروع می‌کند.
+*/
+
+function firstInteraction(){
+
+  startMusic();
+
+}
+
+
+window.addEventListener(
+  "pointerdown",
+  firstInteraction,
+  {
+    once:true,
+    passive:true
+  }
+);
+
+
+window.addEventListener(
+  "touchstart",
+  firstInteraction,
+  {
+    once:true,
+    passive:true
+  }
+);
+
+
+window.addEventListener(
+  "keydown",
+  firstInteraction,
+  {
+    once:true
+  }
+);
+
+
+/* ==================================================
+   دکمه خاموش / روشن موسیقی
+   ================================================== */
+
+musicBtn.addEventListener(
+  "click",
+  event => {
+
+    event.stopPropagation();
+
+
+    if(musicOn){
+
+      stopMusic();
+
+    }
+    else{
+
+      startMusic();
+
+    }
+
+  }
+);
+
+</script> 
+</body>
+</html>
